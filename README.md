@@ -1,5 +1,5 @@
 # Messages
-A personal project to as a practice of using Rust with GraphQL (juniper).
+A personal project as a practice of using Rust to develop a GraphQL (juniper) API.
 It is a basic messaging API.
 
 For a larger project with greater ambitions also written in Rust, please see [stereo](https://github.com/spavikevik/stereo).
