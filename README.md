@@ -2,7 +2,7 @@
 A personal project to as a practice of using Rust with GraphQL (juniper).
 It is a basic messaging API.
 
-For a larger project with greater ambitions written in Rust, please see [stereo](https://github.com/spavikevik/stereo).
+For a larger project with greater ambitions also written in Rust, please see [stereo](https://github.com/spavikevik/stereo).
 Hopefully a README file will pop up there soon as well.
 
 ---
