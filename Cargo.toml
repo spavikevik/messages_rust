@@ -6,14 +6,22 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-uuid = "1.6.1"
-rocket = "0.5.0"
-juniper = "0.15.11"
+argon2 = "0.5.2"
+dotenvy = "0.15.7"
+juniper = { git = "https://github.com/graphql-rust/juniper.git", rev = "df24749", features = ["time"] }
+rocket = { version = "0.5.0", default-features = false }
+juniper_rocket = { git = "https://github.com/graphql-rust/juniper.git", rev = "df24749" }
+time = "0.3.31"
+tokio = { version = "1.0.0", features = ["rt", "rt-multi-thread", "macros"] }
+
+[dependencies.uuid]
+version = "1.6.1"
+features = ["v4"]
 
 [dependencies.sqlx]
 version = "0.7.0"
 default-features = false
-features = ["macros", "migrate"]
+features = ["macros", "migrate", "time"]
 
 [dependencies.rocket_db_pools]
 version = "0.1.0"
