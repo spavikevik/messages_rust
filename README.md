@@ -8,7 +8,7 @@ Hopefully a README file will pop up there soon as well.
 ---
 ## Features
 - User registration
-- Message creation
+- Message creation/modification/removal
 - Message replies
 ---
 ## What could be improved?
