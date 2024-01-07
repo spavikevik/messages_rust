@@ -11,9 +11,12 @@ Hopefully a README file will pop up there soon as well.
 - Message creation/modification/removal
 - Message replies
 ---
-## What could be improved?
+## What I hope to work on later
 - Error handling
+- Logging
 - Code quality (esp. idiomatic usage of Rust)
+- Code repetition
+- Database queries and indexing
 - Probably lots of other things that I couldn't remember at the present moment
 ___
 ## Usage

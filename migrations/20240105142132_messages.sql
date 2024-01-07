@@ -3,8 +3,8 @@ CREATE TABLE messages (
     user_id BLOB NOT NULL,
     content TEXT NOT NULL,
     parent_message_id BLOB ,
-    created_at INTEGER NOT NULL DEFAULT (DATETIME('now', 'localtime')),
-    updated_at INTEGER NOT NULL DEFAULT (DATETIME('now', 'localtime')),
+    created_at TEXT NOT NULL DEFAULT (DATETIME('now', 'localtime')),
+    updated_at TEXT NOT NULL DEFAULT (DATETIME('now', 'localtime')),
     FOREIGN KEY(user_id) REFERENCES users(`id`) ON DELETE CASCADE,
     FOREIGN KEY(parent_message_id) references messages(`id`) ON DELETE CASCADE
 );

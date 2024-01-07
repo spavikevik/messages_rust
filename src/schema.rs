@@ -3,6 +3,7 @@ use juniper::{graphql_object, EmptySubscription, GraphQLInputObject, RootNode};
 use rocket::http::hyper::body::HttpBody;
 use rocket_db_pools::Pool;
 use sqlx::Row;
+use time::OffsetDateTime;
 use uuid::Uuid;
 
 use crate::db::*;
@@ -29,6 +30,18 @@ impl Query {
     ) -> Option<Message> {
         let connection = database.get().await.ok()?;
         Message::get(&id, connection).await.ok()
+    }
+
+    async fn messages(
+        #[graphql(context)] database: &Db,
+        #[graphql(description = "(optional) user id")] user_id: Option<Uuid>,
+        #[graphql(description = "after datetime")] after: OffsetDateTime,
+        #[graphql(description = "before datetime")] before: OffsetDateTime,
+    ) -> Option<Vec<Message>> {
+        let connection = database.get().await.ok()?;
+        Message::get_by_time_range(user_id.as_ref(), (after, before), connection)
+            .await
+            .ok()?
     }
 }
 

@@ -92,6 +92,47 @@ impl Message {
         Ok(message)
     }
 
+    pub async fn get_by_time_range(
+        user_id: Option<&Uuid>,
+        time_range: (OffsetDateTime, OffsetDateTime),
+        mut conn: PoolConnection<Sqlite>,
+    ) -> DbResult<Option<Vec<Message>>> {
+        let user_id_bytes = user_id.map(Message::convert_uuid_to_bytes);
+        let (after, before) = time_range;
+
+        let result_future = match user_id_bytes {
+            None => conn.fetch_all(sqlx::query!(
+                "SELECT * FROM messages WHERE DATETIME(created_at) >= DATETIME(?) AND DATETIME(created_at) <= DATETIME(?)",
+                after,
+                before
+            )),
+            Some(_) => conn.fetch_all(sqlx::query!(
+                "SELECT * FROM messages WHERE DATETIME(created_at) >= DATETIME(?) AND DATETIME(created_at) <= DATETIME(?) AND user_id = DATETIME(?)",
+                after,
+                before,
+                user_id_bytes
+            )),
+        };
+
+        let result: Vec<SqliteRow> = result_future.await?;
+
+        let messages = &mut vec![];
+
+        result.iter().for_each(|row| {
+            let message = Message::from_row(row);
+            match message {
+                Ok(msg) => messages.push(msg),
+                _ => (),
+            }
+        });
+
+        if messages.is_empty() {
+            Ok(None)
+        } else {
+            Ok(Some(mem::take(messages)))
+        }
+    }
+
     pub async fn get_for_user(
         user_id: &Uuid,
         mut conn: PoolConnection<Sqlite>,
